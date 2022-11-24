@@ -1,0 +1,10 @@
+.listing {
+    height: calc(100vh - 5.5em - 30px);
+}
+
+.listing:after {
+    background: rgb(2,0,36);
+    background: linear-gradient(180deg, rgba(2,0,36,0) 0%,
+    rgba(255,255,255,0.92) 39%,
+    rgba(255,255,255,1) 100%);
+}

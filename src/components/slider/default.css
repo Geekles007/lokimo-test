@@ -1,0 +1,25 @@
+.wrapper {
+    @apply flex gap-1 w-full items-center;
+}
+
+.wrapper .range {
+    @apply flex-1 appearance-none bg-gray-300 h-0.5 outline-none;
+}
+
+.wrapper .range::-webkit-slider-thumb {
+    @apply appearance-none rounded-full w-4 relative
+    h-4 bg-gray-800 cursor-pointer
+    hover:bg-primary-400 transition-all duration-500;
+}
+
+.wrapper .range::-moz-range-thumb {
+    @apply appearance-none rounded-full w-4 relative
+    h-4 bg-gray-800 cursor-pointer
+    hover:bg-primary-400 transition-all duration-500;
+}
+
+.wrapper .value {
+    @apply text-sm inline-block relative text-slate-200
+    px-4 py-3 text-center rounded-md w-20
+    leading-3 bg-gray-800;
+}
