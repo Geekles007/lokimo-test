@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@turf/turf": "^6.5.0",
     "@types/luxon": "^3.1.0",
     "@types/mapbox-gl": "^2.3.0",
     "lucide-react": "^0.102.0",

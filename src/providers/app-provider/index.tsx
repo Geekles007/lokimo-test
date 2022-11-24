@@ -1,5 +1,5 @@
 import {createContext, PropsWithChildren, useContext} from "react";
-import {TResponse} from "../../../models/IResponse";
+import {TResponse} from "../../models/IResponse";
 
 export const AppContext = createContext<TResponse<any> | null>(null);
 

@@ -2,7 +2,7 @@ import React, {memo} from "react";
 import MapBox from "../../components/mapbox";
 import Filters from "../../components/filters";
 import Listing from "../../components/listing";
-import {useAppContext} from "../../components/providers/app-provider";
+import {useAppContext} from "../../providers/app-provider";
 import Loading from "../../components/loading";
 
 type HomePageProps = {}

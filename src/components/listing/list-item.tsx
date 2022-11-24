@@ -2,7 +2,7 @@ import React, {memo} from "react";
 import {IAdvertisement} from "../../models/IAdvertisement";
 import {getCurrencyFormat} from "../../helpers";
 import Tag from "../tag";
-import {useAppContext} from "../providers/app-provider";
+import {useAppContext} from "../../providers/app-provider";
 import {IPaginate} from "../../models/IPaginate";
 import BasicInfo from "../basic-info";
 import HouseInfo from "../house-info";

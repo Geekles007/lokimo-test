@@ -1,7 +1,7 @@
 import React, {createRef, memo} from "react";
 import ListItem from "./list-item";
 import './default.css';
-import {useAppContext} from "../providers/app-provider";
+import {useAppContext} from "../../providers/app-provider";
 import Loading from "../loading";
 import {IPaginate} from "../../models/IPaginate";
 

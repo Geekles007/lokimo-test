@@ -1,6 +1,6 @@
 import './App.css'
 import HomePage from "./pages/home";
-import {AppProvider} from "./components/providers/app-provider";
+import {AppProvider} from "./providers/app-provider";
 import {useAdverts} from "./hooks/useAdverts";
 
 function App() {

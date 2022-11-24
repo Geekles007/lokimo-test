@@ -1,7 +1,7 @@
 import React, {memo} from "react";
 import {getCurrencyFormat} from "../../helpers";
 import {IAdvertisement} from "../../models/IAdvertisement";
-import {useAppContext} from "../providers/app-provider";
+import {useAppContext} from "../../providers/app-provider";
 import {IPaginate} from "../../models/IPaginate";
 
 type MarketInfoProps = {
