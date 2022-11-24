@@ -12,7 +12,7 @@ function App() {
   return (
       <AppProvider value={result}>
           <FilterProvider value={filter}>
-              <div className={"p-8 h-screen"}>
+              <div className={"p-2 sm:p-8 h-screen"}>
                   <HomePage/>
               </div>
           </FilterProvider>
