@@ -1,15 +1,15 @@
 import React, {memo} from "react";
 import {Popup} from "react-map-gl";
 import {useAppContext} from "../../providers/app-provider";
-import {IPaginate} from "../../models/IPaginate";
 import BasicInfo from "../basic-info";
 import HouseInfo from "../house-info";
+import {IAdvertisement} from "../../models/IAdvertisement";
 
 type MarketPopupProps = {
 }
 
 const MarketPopup = ({}: MarketPopupProps) => {
-    const {setSelected, selected: popupInfo} = useAppContext<IPaginate>();
+    const {setSelected, selected: popupInfo} = useAppContext<IAdvertisement>();
 
     return <Popup
         tipSize={5}

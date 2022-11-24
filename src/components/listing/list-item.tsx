@@ -3,7 +3,6 @@ import {IAdvertisement} from "../../models/IAdvertisement";
 import {getCurrencyFormat} from "../../helpers";
 import Tag from "../tag";
 import {useAppContext} from "../../providers/app-provider";
-import {IPaginate} from "../../models/IPaginate";
 import BasicInfo from "../basic-info";
 import HouseInfo from "../house-info";
 
@@ -12,7 +11,7 @@ type ListItemProps = {
 }
 
 const ListItem = ({item}: ListItemProps) => {
-    const {setSelected, selected} = useAppContext<IPaginate>();
+    const {setSelected, selected} = useAppContext<IAdvertisement>();
 
     return <a id={item?.id?.toString()} onClick={() => setSelected(item)}>
         <div className={"border border-gray-200 rounded-lg p-2 min-h-32 mb-5 shadow " +

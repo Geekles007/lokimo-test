@@ -1,26 +1,27 @@
-import React, {createRef, memo, ReactNode, useEffect, useState} from "react";
+import React, {createRef, memo, useEffect, useState} from "react";
 import {MAP_BOX_TOKEN} from "../../constants";
 import ReactMapGL, {FullscreenControl, Layer, MapEvent, Marker, NavigationControl, Source} from "react-map-gl";
 import {useAppContext} from "../../providers/app-provider";
-import {IPaginate} from "../../models/IPaginate";
 import MarkerInfo from "./marker-info";
 import MarketPopup from "./market-popup";
-import {IPoint} from "../../models/IPoint";
 import ClickedPoint from "./clicked-point";
 import {X} from "lucide-react";
-import {point as pointer, buffer} from "@turf/turf";
+import {buffer, point as pointer} from "@turf/turf";
+import {IAdvertisement} from "../../models/IAdvertisement";
+import {useFilterContext} from "../../providers/filter-provider";
 
 type MapBoxProps = {
     width: string;
     height: string;
+    adverts: IAdvertisement[]
 }
 
-const MapBox = ({width, height}: MapBoxProps) => {
+const MapBox = ({width, height, adverts}: MapBoxProps) => {
 
-    const {paginate, selected, radius} = useAppContext<IPaginate>();
-    const [lng, setLng] = useState(paginate?.data[0]?.position?.lng);
-    const [lat, setLat] = useState(paginate?.data[0]?.position?.lat);
-    const [point, setPoint] = useState<IPoint | null>(null);
+    const {selected} = useAppContext<IAdvertisement>();
+    const {radius, point, setPoint, setCoordinates} = useFilterContext();
+    const [lng, setLng] = useState(adverts?.[0]?.position?.lng ?? 0);
+    const [lat, setLat] = useState(adverts?.[0]?.position?.lat ?? 0);
     const [circle, setCircle] = useState<any>(null);
     const [zoom, setZoom] = useState(11);
 
@@ -36,10 +37,15 @@ const MapBox = ({width, height}: MapBoxProps) => {
     });
 
     useEffect(() => {
+        if(circle) {
+            setCoordinates(circle.geometry?.coordinates?.[0] ?? [])
+        }
+    }, [circle])
+
+    useEffect(() => {
         if (point) {
             const turfPoint = pointer([point?.lng ?? 0, point?.lat ?? 0]);
             setCircle(buffer(turfPoint, radius, {units: 'kilometers'}));
-            console.log(sourceRef.current);
         }
     }, [point, radius])
 
@@ -56,9 +62,9 @@ const MapBox = ({width, height}: MapBoxProps) => {
     /**
      * Set marker's list
      */
-    const markers = () => paginate?.data?.map(
-        item => (
-            <Marker key={item?.id} longitude={item.position?.lng} latitude={item?.position?.lat}>
+    const markers = () => adverts?.map(
+        (item, index) => (
+            <Marker key={`${index}`} longitude={item.position?.lng ?? 0} latitude={item?.position?.lat ?? 0}>
                 <MarkerInfo item={item}/>
             </Marker>
         )
@@ -73,12 +79,10 @@ const MapBox = ({width, height}: MapBoxProps) => {
         }
     }
 
-    // console.log("radius >>>", circle);
-
     return (
         <>
-            <ReactMapGL ref={sourceRef} onClick={mapClickHandler}
-                        transitionDuration={300}
+            <ReactMapGL onClick={mapClickHandler}
+                        transitionDuration={500}
                         mapStyle="mapbox://styles/geekles007/ckpgybhd11utk17qkavbs7adw"
                         {...viewport} height={height} width={width} onViewportChange={setViewport}>
                 {markers()}
@@ -96,7 +100,8 @@ const MapBox = ({width, height}: MapBoxProps) => {
                     </Source>
                 }
                 {
-                    point && <Source id="my-data" type="geojson" data={{type: "FeatureCollection", features: []}}>
+                    point && <Source ref={sourceRef} id="my-data" type="geojson"
+                                     data={{type: "FeatureCollection", features: []}}>
                         <Layer
                             id="radius-search"
                             type="fill"

@@ -3,13 +3,13 @@ import ListItem from "./list-item";
 import './default.css';
 import {useAppContext} from "../../providers/app-provider";
 import Loading from "../loading";
-import {IPaginate} from "../../models/IPaginate";
+import {IAdvertisement} from "../../models/IAdvertisement";
 
 type ListingProps = {}
 
 const Listing = ({}: ListingProps) => {
 
-    const {isLoading, paginate} = useAppContext<IPaginate>();
+    const {isLoading, adverts} = useAppContext<IAdvertisement>();
     const listRef = createRef<HTMLDivElement>();
 
     return <div ref={listRef} className={"listing pb-24 overflow-y-scroll relative after:content-[''] " +
@@ -17,8 +17,8 @@ const Listing = ({}: ListingProps) => {
         "after:right-0 after:h-32 scroll-smooth lg:block hidden"}>
         {
             isLoading ? <Loading/> :
-                paginate?.data?.map((item) => (
-                    <ListItem key={item?.id} item={item}/>
+                adverts?.map((item, index) => (
+                    <ListItem key={index} item={item}/>
                 ))
         }
     </div>
