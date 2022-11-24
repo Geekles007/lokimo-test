@@ -17,7 +17,7 @@ const HomePage = ({}: HomePageProps) => {
             <Filters />
             <Listing />
         </div>
-        <div className="w-full lg:w-auto flex-1 col-span-12 lg:col-span-8 relative row-span-5 lg:row-span-6 rounded-xl overflow-hidden">
+        <div className="w-full lg:w-auto flex-1 h-[calc(100vh - 5.5em - 30px)] sm:h-auto col-span-12 lg:col-span-8 relative row-span-5 lg:row-span-6 rounded-xl overflow-hidden">
             {
                 <Suspense fallback={<Loading />}>
                     <MapBox adverts={adverts} width={"100%"} height={"100%"} />
