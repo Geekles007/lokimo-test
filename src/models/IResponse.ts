@@ -7,5 +7,7 @@ export type TResponse<T> = {
     setPage: React.Dispatch<React.SetStateAction<number>>
     paginate: T,
     setSelected: (item?: Partial<IAdvertisement>) => void,
-    selected: Partial<IAdvertisement | undefined>
+    selected: Partial<IAdvertisement | undefined>,
+    setRadius: React.Dispatch<React.SetStateAction<number | undefined>>;
+    radius: number | undefined;
 }

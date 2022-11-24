@@ -1,9 +1,10 @@
-import React, {memo} from "react";
-import MapBox from "../../components/mapbox";
+import React, {memo, Suspense, lazy} from "react";
 import Filters from "../../components/filters";
 import Listing from "../../components/listing";
 import {useAppContext} from "../../providers/app-provider";
 import Loading from "../../components/loading";
+
+const MapBox = lazy(() => import("./../../components/mapbox"));
 
 type HomePageProps = {}
 
@@ -17,7 +18,9 @@ const HomePage = ({}: HomePageProps) => {
         </div>
         <div className="w-full lg:w-auto flex-1 col-span-12 lg:col-span-8 relative row-span-5 lg:row-span-6 rounded-xl overflow-hidden">
             {
-                isLoading ? <Loading /> : <MapBox width={"100%"} height={"100%"} />
+                isLoading ? <Loading /> : <Suspense fallback={<Loading />}>
+                    <MapBox width={"100%"} height={"100%"} />
+                </Suspense>
             }
         </div>
     </div>

@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useState} from "react";
+import React, {createRef, memo, ReactNode, useEffect, useState} from "react";
 import {MAP_BOX_TOKEN} from "../../constants";
 import ReactMapGL, {FullscreenControl, Layer, MapEvent, Marker, NavigationControl, Source} from "react-map-gl";
 import {useAppContext} from "../../providers/app-provider";
@@ -7,8 +7,8 @@ import MarkerInfo from "./marker-info";
 import MarketPopup from "./market-popup";
 import {IPoint} from "../../models/IPoint";
 import ClickedPoint from "./clicked-point";
-import * as turf from "@turf/turf";
-import {Units} from "@turf/turf";
+import {X} from "lucide-react";
+import {point as pointer, buffer} from "@turf/turf";
 
 type MapBoxProps = {
     width: string;
@@ -17,19 +17,14 @@ type MapBoxProps = {
 
 const MapBox = ({width, height}: MapBoxProps) => {
 
-    const {paginate, selected} = useAppContext<IPaginate>();
+    const {paginate, selected, radius} = useAppContext<IPaginate>();
     const [lng, setLng] = useState(paginate?.data[0]?.position?.lng);
     const [lat, setLat] = useState(paginate?.data[0]?.position?.lat);
     const [point, setPoint] = useState<IPoint | null>(null);
     const [circle, setCircle] = useState<any>(null);
     const [zoom, setZoom] = useState(11);
 
-    useEffect(() => {
-        if(point) {
-            const options = { steps: 2, units: "kilometers" as Units, properties: { foo: "bar" } };
-            setCircle(turf.circle([point.lng, point.lat], 5, options));
-        }
-    }, [point])
+    const sourceRef = createRef<any>();
 
     const [viewport, setViewport] = React.useState({
         longitude: lng,
@@ -41,7 +36,15 @@ const MapBox = ({width, height}: MapBoxProps) => {
     });
 
     useEffect(() => {
-        if(selected) {
+        if (point) {
+            const turfPoint = pointer([point?.lng ?? 0, point?.lat ?? 0]);
+            setCircle(buffer(turfPoint, radius, {units: 'kilometers'}));
+            console.log(sourceRef.current);
+        }
+    }, [point, radius])
+
+    useEffect(() => {
+        if (selected) {
             setViewport({
                 ...viewport,
                 longitude: selected?.position?.lng ?? 0,
@@ -55,18 +58,14 @@ const MapBox = ({width, height}: MapBoxProps) => {
      */
     const markers = () => paginate?.data?.map(
         item => (
-            <Marker key={item?.id} longitude={item.position?.lng} latitude={item?.position?.lat} >
-                <MarkerInfo item={item} />
+            <Marker key={item?.id} longitude={item.position?.lng} latitude={item?.position?.lat}>
+                <MarkerInfo item={item}/>
             </Marker>
         )
     )
 
-    /**
-     * get coordinates of clicked point on the map
-     * @param e
-     */
     const mapClickHandler = (e: MapEvent) => {
-        if(e) {
+        if (e) {
             setPoint({
                 lat: e?.lngLat[1],
                 lng: e?.lngLat[0]
@@ -74,31 +73,50 @@ const MapBox = ({width, height}: MapBoxProps) => {
         }
     }
 
+    // console.log("radius >>>", circle);
+
     return (
         <>
-            <ReactMapGL onClick={mapClickHandler}
+            <ReactMapGL ref={sourceRef} onClick={mapClickHandler}
                         transitionDuration={300}
                         mapStyle="mapbox://styles/geekles007/ckpgybhd11utk17qkavbs7adw"
-                        {...viewport} height={height}  width={width} onViewportChange={setViewport}>
+                        {...viewport} height={height} width={width} onViewportChange={setViewport}>
                 {markers()}
-                {point && <ClickedPoint point={point} />}
+                {point && <ClickedPoint point={point}/>}
                 {
                     point && <Source id="my-data" type="geojson" data={circle}>
                         <Layer
-                            id="point-90-hi"
+                            id="locations"
+                            type="line"
+                            paint={{
+                                "line-color": "#088",
+                                "line-opacity": 0.4
+                            }}
+                        />
+                    </Source>
+                }
+                {
+                    point && <Source id="my-data" type="geojson" data={{type: "FeatureCollection", features: []}}>
+                        <Layer
+                            id="radius-search"
                             type="fill"
                             paint={{
                                 "fill-color": "#088",
-                                "fill-opacity": 0.4,
-                                "fill-outline-color": "yellow"
+                                "fill-opacity": 0.4
                             }}
                         />
                     </Source>
                 }
                 <MarketPopup/>
-                <FullscreenControl className={"absolute left-4 top-4"} />
-                <NavigationControl className={"absolute left-4 top-4"} />
+                <FullscreenControl className={"absolute left-4 top-4"}/>
+                <NavigationControl className={"absolute left-4 top-4"}/>
             </ReactMapGL>
+            {
+                point && <button onClick={() => setPoint(null)}
+                                 className={"px-1.5 py-1 text-sm absolute top-4 right-4 bg-red-400 flex items-center gap-1 rounded-md"}>
+                    <X size={16}/> <span>Annuler la selection</span>
+                </button>
+            }
         </>
     );
 

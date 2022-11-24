@@ -12,6 +12,7 @@ export const useAdverts = (url: string): TResponse<Partial<IPaginate> | undefine
     const [page, setPage] = useState(0);
     const [selected, setSelected] = useState<Partial<IAdvertisement>>();
     const [paginate, setPaginate] = useState<Partial<IPaginate>>();
+    const [radius, setRadius] = useState<number | undefined>(1);
 
     const selectHandler = useCallback((item?: Partial<IAdvertisement>) => {
         setSelected(item)
@@ -23,6 +24,12 @@ export const useAdverts = (url: string): TResponse<Partial<IPaginate> | undefine
         }
     }, [data, page])
 
+    useEffect(() => {
+        if(radius) {
+            console.log("radius")
+        }
+    }, [radius])
+
     return {
         isLoading: !error && !paginate,
         error: error,
@@ -30,6 +37,8 @@ export const useAdverts = (url: string): TResponse<Partial<IPaginate> | undefine
         setPage,
         paginate,
         selected,
-        setSelected: selectHandler
+        setSelected: selectHandler,
+        setRadius,
+        radius
     }
 }
