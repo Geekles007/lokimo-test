@@ -1,14 +1,14 @@
 import {IStatus} from "./IStatus";
 import {IData} from "./IData";
+import {Base} from "./Base";
 
-export interface IAdvertisement {
+export interface IAdvertisement extends Base<number>{
     buy: boolean,
     city: string,
     data: IData,
     first_date: string,
     good_id: string,
     house: boolean,
-    id: number,
     iris: string,
     last_date: string,
     meter_square: number,
