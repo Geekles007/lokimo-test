@@ -1,5 +1,5 @@
 .listing {
-    height: calc(100vh - 5.5em - 30px);
+    height: calc(100vh - 5.5em - 100px) !important;
 }
 
 .listing:after {
