@@ -4,7 +4,7 @@
 
 @media(max-width: 1024px) {
     .mapbox {
-        height: calc(100vh - 5.5em - 30px) !important;
+        height: calc(100vh - 1.5em - 36px) !important;
     }
 
     .modal {
@@ -14,7 +14,7 @@
 
 @media(max-width: 640px) {
     .mapbox {
-        height: calc(99vh - 5.5em - 30px) !important;
+        height: calc(99vh - 1.5em - 36px) !important;
     }
 
     .modal {
