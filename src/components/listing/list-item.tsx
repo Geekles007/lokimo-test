@@ -15,10 +15,11 @@ type ListItemProps = {
 const ListItem = ({item}: ListItemProps) => {
     const {setSelected, selected} = useAppContext<IAdvertisement>();
     const {width} = useWindowDimensions();
+    console.log(width)
 
     return <div id={item?.id?.toString()} className={"lg:w-auto w-full"} onClick={width <= 1024 ? undefined : () => setSelected(item)}>
         <div
-            className={"transition-all w-full relative duration-500 border border-gray-200 rounded-lg p-2 min-h-32 shadow " +
+            className={"transition-all w-full relative lg:cursor-pointer cursor-default duration-500 border border-gray-200 rounded-lg p-2 min-h-32 shadow " +
                 "transition-all duration-500 hover:shadow-md bg-white flex flex-col gap-2 overflow-hidden" +
                 `border-2 hover:border-primary-400 ${selected?.id === item?.id ? "border-primary-400 bg-primary-50" : ""}`}>
             <div className="flex justify-between items-start flex-wrap gap-2 z-20">

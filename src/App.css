@@ -13,6 +13,10 @@
 }
 
 @media(max-width: 640px) {
+    .mapbox {
+        height: calc(99vh - 5.5em - 30px) !important;
+    }
+
     .modal {
         width: calc(95vw - 1rem) !important;
     }
