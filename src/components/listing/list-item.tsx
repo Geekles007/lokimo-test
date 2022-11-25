@@ -15,7 +15,6 @@ type ListItemProps = {
 const ListItem = ({item}: ListItemProps) => {
     const {setSelected, selected} = useAppContext<IAdvertisement>();
     const {width} = useWindowDimensions();
-    console.log(width)
 
     return <div id={item?.id?.toString()} className={"lg:w-auto w-full"} onClick={width <= 1024 ? undefined : () => setSelected(item)}>
         <div
