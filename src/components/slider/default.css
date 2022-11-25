@@ -8,7 +8,7 @@
 
 .wrapper .range::-webkit-slider-thumb {
     @apply appearance-none rounded-full w-4 relative
-    h-4 bg-gray-800 cursor-pointer
+    h-4 bg-primary-400 lg:bg-gray-800 cursor-pointer
     hover:bg-primary-400 transition-all duration-500;
 }
 
@@ -20,6 +20,6 @@
 
 .wrapper .value {
     @apply text-xs inline-block relative text-slate-200
-    px-4 py-3 text-center rounded-md w-20
+    lg:px-4 lg:py-3 text-center rounded-md w-16
     leading-3 bg-gray-800;
 }
