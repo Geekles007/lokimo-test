@@ -4,6 +4,11 @@ import {useEffect, useState} from "react";
 import {IAdvertisement} from "../models/IAdvertisement";
 import {areCoordinatesAreInside} from "../helpers";
 
+/**
+ * Hook to manage filters changes
+ * @param adverts
+ * @param setAdverts
+ */
 export const useFilter = (adverts: Partial<IAdvertisement>[],
                           setAdverts: React.Dispatch<React.SetStateAction<Partial<IAdvertisement>[]>>): IFilterResponse => {
     const [coordinates, setCoordinates] = useState<[number, number][]>();

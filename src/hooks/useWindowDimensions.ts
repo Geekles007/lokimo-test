@@ -1,6 +1,8 @@
-// create a hook to get the window dimensions
 import {useEffect, useState} from "react";
 
+/**
+ * Hook to get window dimensions
+ */
 const useWindowDimensions = () => {
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,

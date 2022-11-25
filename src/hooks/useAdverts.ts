@@ -5,6 +5,10 @@ import {IAdvertisement} from "../models/IAdvertisement";
 import {fetcher} from "../helpers";
 import useSWR from "swr";
 
+/**
+ * Hook to manage data changing
+ * @param url
+ */
 export const useAdverts = (url: string): TResponse<Partial<IAdvertisement>> => {
     const {data, error} = useSWR<IAdvertisement[]>(`${DATA_API}/${url}`, fetcher);
     const [page, setPage] = useState(0);

@@ -1,5 +1,11 @@
 import {IPoint} from "../models/IPoint";
 
+/**
+ * Little function to manage money/price format
+ * @param amount
+ * @param currencySymbol
+ * @param prefix
+ */
 export function getCurrencyFormat(amount: number, currencySymbol: string, prefix: boolean = false) {
     return `${prefix ? currencySymbol : ""}${amount.toLocaleString('en-US', {maximumFractionDigits: 2})}${!prefix ? currencySymbol : ""}`
 }
@@ -25,6 +31,10 @@ export const areCoordinatesAreInside = (pointToCheck: IPoint, centerPoint: IPoin
     return R * c <= km;
 }
 
+/**
+ * Calculate the radius used to check coordinates match
+ * @param value
+ */
 function calculateRadius(value: number) {
     return (value * Math.PI) / 180;
 }
