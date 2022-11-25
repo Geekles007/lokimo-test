@@ -13,8 +13,8 @@ const Listing = ({}: ListingProps) => {
     const listRef = createRef<HTMLDivElement>();
 
     return <div ref={listRef} className={"listing pb-24 overflow-y-scroll relative after:content-[''] " +
-        "after:fixed after:pointer-events-none after:bottom-0 after:left-0 " +
-        "after:right-0 after:h-32 scroll-smooth lg:block hidden"}>
+        "after:fixed after:pointer-events-none after:bottom-0 after:left-0" +
+        "after:right-0 after:h-32 scroll-smooth after:z-20 lg:flex lg:flex-col lg:gap-5 hidden"}>
         {
             isLoading ? <Loading/> :
                 adverts?.map((item, index) => (

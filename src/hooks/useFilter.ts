@@ -2,7 +2,7 @@ import {IFilterResponse} from "../models/IFilterResponse";
 import {IPoint} from "../models/IPoint";
 import {useEffect, useState} from "react";
 import {IAdvertisement} from "../models/IAdvertisement";
-import {checkIfInsideRadius} from "../helpers";
+import {areCoordinatesAreInside} from "../helpers";
 
 export const useFilter = (adverts: Partial<IAdvertisement>[],
                           setAdverts: React.Dispatch<React.SetStateAction<Partial<IAdvertisement>[]>>): IFilterResponse => {
@@ -14,7 +14,7 @@ export const useFilter = (adverts: Partial<IAdvertisement>[],
         if (radius && adverts && point) {
             const list: Partial<IAdvertisement>[] = adverts?.filter(elt => {
                 return (coordinates ?? [])?.some(item => {
-                    return checkIfInsideRadius(elt?.position ?? {lng: 0, lat: 0}, {lng: item[0], lat: item[1]}, radius);
+                    return areCoordinatesAreInside(elt?.position ?? {lng: 0, lat: 0}, {lng: item[0], lat: item[1]}, radius);
                 })
             }) ?? []
             setAdverts(list);

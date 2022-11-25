@@ -2,8 +2,18 @@
     @apply px-2 hover:bg-primary-400;
 }
 
-@media(max-width: 640px) {
+@media(max-width: 1024px) {
     .mapbox {
-        height: calc(100vh - 5.5em - 30px);
+        height: calc(100vh - 5.5em - 30px) !important;
+    }
+
+    .modal {
+        width: calc(98vw - 1rem) !important;
+    }
+}
+
+@media(max-width: 640px) {
+    .modal {
+        width: calc(95vw - 1rem) !important;
     }
 }

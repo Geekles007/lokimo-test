@@ -1,4 +1,4 @@
-import React, {createRef, memo, useEffect, useState} from "react";
+import React, {createRef, memo, useCallback, useEffect, useState} from "react";
 import {MAP_BOX_TOKEN} from "../../constants";
 import ReactMapGL, {FullscreenControl, Layer, MapEvent, Marker, NavigationControl, Source} from "react-map-gl";
 import {useAppContext} from "../../providers/app-provider";
@@ -24,8 +24,6 @@ const MapBox = ({width, height, adverts}: MapBoxProps) => {
     const [lat, setLat] = useState(adverts?.[0]?.position?.lat ?? 0);
     const [circle, setCircle] = useState<any>(null);
     const [zoom, setZoom] = useState(11);
-
-    const sourceRef = createRef<any>();
 
     const [viewport, setViewport] = React.useState({
         longitude: lng,
@@ -62,22 +60,22 @@ const MapBox = ({width, height, adverts}: MapBoxProps) => {
     /**
      * Set marker's list
      */
-    const markers = () => adverts?.map(
+    const markers = useCallback(() => adverts?.map(
         (item, index) => (
             <Marker key={`${index}`} longitude={item.position?.lng ?? 0} latitude={item?.position?.lat ?? 0}>
                 <MarkerInfo item={item}/>
             </Marker>
         )
-    )
+    ), [adverts])
 
-    const mapClickHandler = (e: MapEvent) => {
+    const mapClickHandler = useCallback((e: MapEvent) => {
         if (e) {
             setPoint({
                 lat: e?.lngLat[1],
                 lng: e?.lngLat[0]
             })
         }
-    }
+    }, [setPoint])
 
     return (
         <>
@@ -100,7 +98,7 @@ const MapBox = ({width, height, adverts}: MapBoxProps) => {
                     </Source>
                 }
                 {
-                    point && <Source ref={sourceRef} id="my-data" type="geojson"
+                    point && <Source id="my-data" type="geojson"
                                      data={{type: "FeatureCollection", features: []}}>
                         <Layer
                             id="radius-search"

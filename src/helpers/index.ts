@@ -6,10 +6,26 @@ export function getCurrencyFormat(amount: number, currencySymbol: string, prefix
 
 export const fetcher = (...args: any) => fetch(args).then(res => res.json());
 
-export const checkIfInsideRadius = (pointToCheck: IPoint, centerPoint: IPoint, radius: number) => {
-    const ky = 40000 / 360;
-    const kx = Math.cos((Math.PI * (centerPoint?.lat ?? 0)) / 180.0) * ky;
-    const dx = Math.abs((centerPoint?.lng ?? 0) - (pointToCheck?.lng ?? 0)) * kx;
-    const dy = Math.abs((centerPoint?.lat ?? 0) - (pointToCheck?.lat ?? 0)) * ky;
-    return Math.sqrt(dx * dx + dy * dy) <= radius;
+/**
+ * Function to check if selected points are within the radius in kilometer or near
+ * @param pointToCheck
+ * @param centerPoint
+ * @param km
+ */
+export const areCoordinatesAreInside = (pointToCheck: IPoint, centerPoint: IPoint, km: number) => {
+    const R = 6378;
+    const dLat = calculateRadius(centerPoint.lat - pointToCheck.lat);
+    const dLon = calculateRadius(centerPoint.lng - pointToCheck.lng);
+    const lat1 = calculateRadius(pointToCheck.lat);
+    const lat2 = calculateRadius(centerPoint.lat);
+
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    console.log(R * c);
+    return R * c <= km;
+}
+
+function calculateRadius(value: number) {
+    return (value * Math.PI) / 180;
 }

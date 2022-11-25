@@ -10,7 +10,7 @@ const ClickedPoint = ({point}: ClickedPointProps) => {
 
     return <>
         <Marker longitude={point.lng} latitude={point.lat} >
-            <div className="animate-ping w-4 h-4 bg-primary-400 rounded-full"></div>
+            <div className="animate-ping w-3 h-3 bg-primary-400 rounded-full"></div>
         </Marker>
     </>
 
