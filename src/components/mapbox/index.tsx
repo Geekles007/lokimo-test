@@ -1,14 +1,11 @@
-import React, {createRef, memo, useCallback, useEffect, useState} from "react";
-import {MAP_BOX_TOKEN} from "../../constants";
-import ReactMapGL, {FullscreenControl, Layer, MapEvent, Marker, NavigationControl, Source} from "react-map-gl";
-import {useAppContext} from "../../providers/app-provider";
+import React, {memo, useCallback} from "react";
+import ReactMapGL, {FullscreenControl, Layer, Marker, NavigationControl, Source} from "react-map-gl";
 import MarkerInfo from "./marker-info";
 import MarketPopup from "./market-popup";
 import ClickedPoint from "./clicked-point";
 import {X} from "lucide-react";
-import {buffer, point as pointer} from "@turf/turf";
 import {IAdvertisement} from "../../models/IAdvertisement";
-import {useFilterContext} from "../../providers/filter-provider";
+import {useMap} from "../../hooks/useMap";
 
 type MapBoxProps = {
     width: string;
@@ -18,74 +15,16 @@ type MapBoxProps = {
 
 const MapBox = ({width, height, adverts}: MapBoxProps) => {
 
-    const {selected} = useAppContext<IAdvertisement>();
-    const {radius, point, setPoint, setCoordinates} = useFilterContext();
-    const [lng, setLng] = useState(0);
-    const [lat, setLat] = useState(0);
-    const [circle, setCircle] = useState<any>(null);
-    const [zoom, setZoom] = useState(11);
-
-    const [viewport, setViewport] = React.useState({
-        longitude: lng,
-        latitude: lat,
-        zoom: zoom,
-        pitch: 0,
-        bearing: 0,
-        mapboxApiAccessToken: MAP_BOX_TOKEN
-    });
-
-    useEffect(() => {
-        if(circle) {
-            setCoordinates(circle.geometry?.coordinates?.[0] ?? [])
-        }
-    }, [circle])
-
-    useEffect(() => {
-        if (point) {
-            const turfPoint = pointer([point?.lng ?? 0, point?.lat ?? 0]);
-            setCircle(buffer(turfPoint, radius, {units: 'kilometers'}));
-        }
-    }, [point, radius])
-
-    useEffect(() => {
-        if (selected) {
-            setViewport({
-                ...viewport,
-                longitude: selected?.position?.lng ?? 0,
-                latitude: selected?.position?.lat ?? 0,
-            })
-        }
-    }, [selected])
-
-    useEffect(() => {
-        if (adverts) {
-            setViewport({
-                ...viewport,
-                longitude: adverts?.[0]?.position?.lng ?? 0,
-                latitude: adverts?.[0]?.position?.lat ?? 0,
-            })
-        }
-    }, [adverts])
+    const {mapClickHandler, setViewport, viewport, point, setPoint, circle, setCircle} = useMap(adverts);
 
     /**
      * Set marker's list
      */
-    const markers = useCallback(() => adverts?.map(
-        (item, index) => (
-            <Marker key={`${index}`} longitude={item.position?.lng ?? 0} latitude={item?.position?.lat ?? 0}>
-                <MarkerInfo item={item}/>
-            </Marker>
-        )
-    ), [adverts])
-
-    const mapClickHandler = useCallback((e: MapEvent) => {
-        if (e) {
-            setPoint({
-                lat: e?.lngLat[1],
-                lng: e?.lngLat[0]
-            })
-        }
-    }, [setPoint])
+    const markers = useCallback(() => adverts?.map((item, index) => {
+        return <Marker key={`${index}`} longitude={item.position?.lng ?? 0} latitude={item?.position?.lat ?? 0}>
+            <MarkerInfo item={item}/>
+        </Marker>
+    }), [adverts])
 
     return (
         <>
