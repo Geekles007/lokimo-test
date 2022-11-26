@@ -9,13 +9,14 @@ import {Link, Star, Scale3d, X} from "lucide-react";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import MoreInfos from "./more-infos";
 import Badges from "./badges";
+import {useAdvertStore} from "../../stores/DataStore";
 
 type ListItemProps = {
-    item?: Partial<IAdvertisement>
+    item?: IAdvertisement
 }
 
 const ListItem = ({item}: ListItemProps) => {
-    const {setSelected, selected} = useAppContext<IAdvertisement>();
+    const {setSelected, selected} = useAdvertStore(state => state);
     const {width} = useWindowDimensions();
 
     return <div id={item?.id?.toString()} className={"lg:w-auto w-full"} onClick={width <= 1024 ? undefined : () => setSelected(item)}>

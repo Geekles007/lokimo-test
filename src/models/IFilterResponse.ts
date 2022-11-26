@@ -1,10 +1,10 @@
 import {IPoint} from "./IPoint";
 
 export interface IFilterResponse {
-    setRadius: React.Dispatch<React.SetStateAction<number | undefined>>;
+    setRadius: (value: number) => void;
     radius: number | undefined;
-    setPoint: React.Dispatch<React.SetStateAction<IPoint | null>>;
+    setPoint: (point: IPoint | null) => void;
     point: IPoint | null;
-    setCoordinates: React.Dispatch<React.SetStateAction<[number, number][] | undefined>>;
+    setCoordinates: (value: [number, number][]) => void;
     coordinates: [number, number][] | undefined;
 }

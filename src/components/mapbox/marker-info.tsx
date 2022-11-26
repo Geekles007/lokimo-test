@@ -2,13 +2,14 @@ import React, {memo} from "react";
 import {getCurrencyFormat} from "../../helpers";
 import {IAdvertisement} from "../../models/IAdvertisement";
 import {useAppContext} from "../../providers/app-provider";
+import {useAdvertStore} from "../../stores/DataStore";
 
 type MarketInfoProps = {
     item?: IAdvertisement;
 }
 
 const MarkerInfo = ({item}: MarketInfoProps) => {
-    const {setSelected, selected} = useAppContext<IAdvertisement>();
+    const {setSelected, selected} = useAdvertStore(state => state);
 
     return <>
         <a onClick={() => setSelected(item)} href={`#${item?.id?.toString()}`}

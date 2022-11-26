@@ -2,13 +2,14 @@ import React, {memo} from "react";
 import {Link, Scale3d, Star, X} from "lucide-react";
 import {IAdvertisement} from "../../models/IAdvertisement";
 import {useAppContext} from "../../providers/app-provider";
+import {useAdvertStore} from "../../stores/DataStore";
 
 type BadgesProps = {
     item?: Partial<IAdvertisement>
 }
 
 const Badges = ({item}: BadgesProps) => {
-    const {setSelected} = useAppContext<IAdvertisement>();
+    const {setSelected} = useAdvertStore(state => state);
 
     return <>
         <div className="flex items-center gap-2 pr-9 lg:pr-0">

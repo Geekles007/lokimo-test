@@ -2,11 +2,9 @@
 export type TResponse<T> = {
     isLoading: boolean;
     error?: Error;
-    page: number;
-    setPage: React.Dispatch<React.SetStateAction<number>>
-    setAdverts: React.Dispatch<React.SetStateAction<T[]>>
+    setAdverts: (value: T[]) => void;
     adverts: T[],
     all: T[],
-    setSelected: (item?: Partial<T>) => void,
-    selected: Partial<T | undefined>,
+    setSelected: (item?: T) => void,
+    selected: T | undefined,
 }

@@ -1,13 +1,14 @@
 import React, {ChangeEvent, memo, useCallback, useState} from "react";
 import "./default.css";
 import {useFilterContext} from "../../providers/filter-provider";
+import {useFilterStore} from "../../stores/FilterStore";
 
 type SliderProps = {
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Slider = ({onChange}: SliderProps) => {
-    const {radius, setRadius} = useFilterContext();
+    const {radius, setRadius} = useFilterStore(state => state);
 
     const changeHandler = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
         const val = evt.target.value;

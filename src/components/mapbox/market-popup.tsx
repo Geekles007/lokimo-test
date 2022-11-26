@@ -4,12 +4,13 @@ import {useAppContext} from "../../providers/app-provider";
 import BasicInfo from "../basic-info";
 import HouseInfo from "../house-info";
 import {IAdvertisement} from "../../models/IAdvertisement";
+import {useAdvertStore} from "../../stores/DataStore";
 
 type MarketPopupProps = {
 }
 
 const MarketPopup = ({}: MarketPopupProps) => {
-    const {setSelected, selected: popupInfo} = useAppContext<IAdvertisement>();
+    const {setSelected, selected: popupInfo} = useAdvertStore(state => state);
 
     return <Popup
         tipSize={5}

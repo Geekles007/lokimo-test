@@ -2,13 +2,14 @@ import React, {memo} from "react";
 import {getCurrencyFormat} from "../../helpers";
 import {IAdvertisement} from "../../models/IAdvertisement";
 import {useAppContext} from "../../providers/app-provider";
+import {useAdvertStore} from "../../stores/DataStore";
 
 type MoreInfosProps = {
-    item?: Partial<IAdvertisement>;
+    item?: IAdvertisement;
 }
 
 const MoreInfos = ({item}: MoreInfosProps) => {
-    const {selected} = useAppContext<IAdvertisement>();
+    const {selected} = useAdvertStore(state => state);
 
     return <div>
         {

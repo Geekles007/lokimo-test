@@ -4,11 +4,12 @@ import {IAdvertisement} from "../../models/IAdvertisement";
 import ListItem from "../listing/list-item";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import {useAdvertStore} from "../../stores/DataStore";
 
 type DetailsModalProps = {}
 
 const DetailsModal = ({}: DetailsModalProps) => {
-    const {selected, setSelected} = useAppContext<IAdvertisement>();
+    const {selected, setSelected} = useAdvertStore(state => state);
     const modalRef = createRef<HTMLDivElement>();
     const {width} = useWindowDimensions();
 

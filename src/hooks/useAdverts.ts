@@ -11,7 +11,6 @@ import useSWR from "swr";
  */
 export const useAdverts = (url: string): TResponse<Partial<IAdvertisement>> => {
     const {data, error} = useSWR<IAdvertisement[]>(`${DATA_API}/${url}`, fetcher);
-    const [page, setPage] = useState(0);
     const [selected, setSelected] = useState<Partial<IAdvertisement>>();
     const [adverts, setAdverts] = useState<Partial<IAdvertisement>[]>(data ?? []);
 
@@ -28,8 +27,6 @@ export const useAdverts = (url: string): TResponse<Partial<IAdvertisement>> => {
     return {
         isLoading: !error && !adverts,
         error: error,
-        page,
-        setPage,
         adverts,
         selected,
         setSelected: selectHandler,

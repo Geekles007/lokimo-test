@@ -4,12 +4,13 @@ import './default.css';
 import {useAppContext} from "../../providers/app-provider";
 import Loading from "../loading";
 import {IAdvertisement} from "../../models/IAdvertisement";
+import {useAdvertStore} from "../../stores/DataStore";
 
 type ListingProps = {}
 
 const Listing = ({}: ListingProps) => {
 
-    const {isLoading, adverts} = useAppContext<IAdvertisement>();
+    const {isLoading, adverts} = useAdvertStore(state => state);
     const listRef = createRef<HTMLDivElement>();
 
     return <div ref={listRef} className={"listing pb-24 overflow-y-scroll relative after:content-[''] " +

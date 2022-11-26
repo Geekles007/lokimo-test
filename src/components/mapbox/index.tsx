@@ -1,14 +1,14 @@
-import React, {createRef, memo, useCallback, useEffect, useState} from "react";
+import React, {memo, useCallback, useEffect, useState} from "react";
 import {MAP_BOX_TOKEN} from "../../constants";
 import ReactMapGL, {FullscreenControl, Layer, MapEvent, Marker, NavigationControl, Source} from "react-map-gl";
-import {useAppContext} from "../../providers/app-provider";
 import MarkerInfo from "./marker-info";
 import MarketPopup from "./market-popup";
 import ClickedPoint from "./clicked-point";
 import {X} from "lucide-react";
 import {buffer, point as pointer} from "@turf/turf";
 import {IAdvertisement} from "../../models/IAdvertisement";
-import {useFilterContext} from "../../providers/filter-provider";
+import {useAdvertStore} from "../../stores/DataStore";
+import {useFilterStore} from "../../stores/FilterStore";
 
 type MapBoxProps = {
     width: string;
@@ -18,8 +18,8 @@ type MapBoxProps = {
 
 const MapBox = ({width, height, adverts}: MapBoxProps) => {
 
-    const {selected} = useAppContext<IAdvertisement>();
-    const {radius, point, setPoint, setCoordinates} = useFilterContext();
+    const {selected} = useAdvertStore(state => state);
+    const {radius, point, setPoint, setCoordinates} = useFilterStore(state => state);
     const [lng, setLng] = useState(adverts?.[0]?.position?.lng ?? 0);
     const [lat, setLat] = useState(adverts?.[0]?.position?.lat ?? 0);
     const [circle, setCircle] = useState<any>(null);
