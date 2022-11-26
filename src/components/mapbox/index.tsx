@@ -57,6 +57,16 @@ const MapBox = ({width, height, adverts}: MapBoxProps) => {
         }
     }, [selected])
 
+    useEffect(() => {
+        if (adverts) {
+            setViewport({
+                ...viewport,
+                longitude: adverts?.[0]?.position?.lng ?? 0,
+                latitude: adverts?.[0]?.position?.lat ?? 0,
+            })
+        }
+    }, [adverts])
+
     /**
      * Set marker's list
      */

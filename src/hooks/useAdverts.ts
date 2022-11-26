@@ -4,6 +4,7 @@ import {useCallback, useEffect, useState} from "react";
 import {IAdvertisement} from "../models/IAdvertisement";
 import {fetcher} from "../helpers";
 import useSWR from "swr";
+import DataService from "../services/DataService";
 
 /**
  * Hook to manage data changing
@@ -21,7 +22,7 @@ export const useAdverts = (url: string): TResponse<Partial<IAdvertisement>> => {
 
     useEffect(() => {
         if (data) {
-            setAdverts(data);
+            setAdverts(DataService.getData(data));
         }
     }, [data])
 

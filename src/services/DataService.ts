@@ -8,7 +8,7 @@ class DataService {
      * @param data
      */
     getData(data: Partial<IAdvertisement>[]): Partial<IAdvertisement>[] {
-        return data;
+        return data.filter(item => item.price && item?.price > 0);
     }
 
 }
