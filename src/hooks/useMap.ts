@@ -57,8 +57,8 @@ export const useMap = (adverts: IAdvertisement[]) => {
         } else if (adverts) {
             setViewport({
                 ...viewport,
-                longitude: selected ? (selected?.position?.lng ?? 0) : (adverts?.[0]?.position?.lng ?? 0),
-                latitude: selected ? (selected?.position?.lat ?? 0) : (adverts?.[0]?.position?.lat ?? 0),
+                longitude: selected && selected?.position ? (selected?.position?.lng ?? 0) : (adverts?.[0]?.position?.lng ?? 0),
+                latitude: selected && selected?.position ? (selected?.position?.lat ?? 0) : (adverts?.[0]?.position?.lat ?? 0),
             })
         }
     }, [adverts, selected])
