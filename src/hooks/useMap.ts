@@ -37,7 +37,7 @@ export const useMap = (adverts: IAdvertisement[]) => {
         }
     }, [point, radius])
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (selected) {
             setViewport({
                 ...viewport,
@@ -45,17 +45,23 @@ export const useMap = (adverts: IAdvertisement[]) => {
                 latitude: selected?.position?.lat ?? 0,
             })
         }
-    }, [selected])
+    }, [selected]) */
 
     useEffect(() => {
-        if (adverts) {
+        if (selected) {
+            setViewport({
+                ...viewport,
+                longitude: selected?.position?.lng ?? 0,
+                latitude: selected?.position?.lat ?? 0,
+            })
+        } else if (adverts) {
             setViewport({
                 ...viewport,
                 longitude: adverts?.[0]?.position?.lng ?? 0,
                 latitude: adverts?.[0]?.position?.lat ?? 0,
             })
         }
-    }, [adverts])
+    }, [adverts, selected])
 
     const mapClickHandler = useCallback((e: MapEvent) => {
         if (e) {
