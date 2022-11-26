@@ -10,8 +10,8 @@ import {useCallback, useEffect, useState} from "react";
 export const useMap = (adverts: IAdvertisement[]) => {
     const {selected} = useAppContext<IAdvertisement>();
     const {radius, point, setPoint, setCoordinates} = useFilterContext();
-    const [lng, setLng] = useState(0);
-    const [lat, setLat] = useState(0);
+    const [lng, setLng] = useState(adverts?.[0]?.position?.lng ?? 0);
+    const [lat, setLat] = useState(adverts?.[0]?.position?.lat ?? 0);
     const [circle, setCircle] = useState<any>(null);
     const [zoom, setZoom] = useState(11);
 
@@ -55,13 +55,11 @@ export const useMap = (adverts: IAdvertisement[]) => {
                 latitude: selected?.position?.lat ?? 0,
             })
         } else if (adverts) {
-           if (!selected) {
                setViewport({
                    ...viewport,
                    longitude: (adverts?.[0]?.position?.lng ?? 0),
                    latitude: (adverts?.[0]?.position?.lat ?? 0),
                })
-           }
         }
     }, [adverts])
 
