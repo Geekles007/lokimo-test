@@ -48,13 +48,7 @@ export const useMap = (adverts: IAdvertisement[]) => {
     }, [selected]) 
 
     useEffect(() => {
-        if (selected) {
-            setViewport({
-                ...viewport,
-                longitude: selected?.position?.lng ?? 0,
-                latitude: selected?.position?.lat ?? 0,
-            })
-        } else if (adverts) {
+        if (adverts && !point) {
                setViewport({
                    ...viewport,
                    longitude: (adverts?.[0]?.position?.lng ?? 0),
